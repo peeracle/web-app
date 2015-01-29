@@ -1,0 +1,9 @@
+[submodule "api"]
+	path = api
+	url = ssh://git@stash.dotstar.fr:7999/tlk/api.git
+[submodule "client"]
+	path = client
+	url = ssh://git@stash.dotstar.fr:7999/tlk/client.git
+[submodule "tracker"]
+	path = tracker
+	url = ssh://git@stash.dotstar.fr:7999/tlk/tracker.git
