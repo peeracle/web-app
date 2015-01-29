@@ -3,18 +3,10 @@ node 'api' {
     version => 'v0.10.36',
   }
   
-  package { 'forever':
-    ensure   => present,
-    provider => 'npm',
-    require  => Class['nodejs']
-  }
-  
   class { 'nginx':
   }
   nginx::resource::vhost { 'api.peeracle.local':
-    proxy => 'http://localhost:3000',
-    access_log => '/home/vagrant/api/nginx_access.log',
-    error_log => '/home/vagrant/api/nginx_error.log',
+    proxy => 'http://localhost:8080'
   }
 }
 
@@ -23,7 +15,7 @@ node 'client' {
   }
   nginx::resource::vhost { 'client.peeracle.local':
     ensure => present,
-    www_root => '/home/vagrant/client',
+    www_root => '/home/vagrant/client/app',
     access_log => '/home/vagrant/client/nginx_access.log',
     error_log => '/home/vagrant/client/nginx_error.log',
   }
