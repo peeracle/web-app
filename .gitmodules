@@ -1,9 +1,39 @@
+[submodule "vagrant/puppet/modules/nodejs"]
+	path = vagrant/puppet/modules/nodejs
+	url = git://github.com/willdurand/puppet-nodejs.git
+[submodule "vagrant/puppet/modules/stdlib"]
+	path = vagrant/puppet/modules/stdlib
+	url = git://github.com/puppetlabs/puppetlabs-stdlib.git
+[submodule "vagrant/puppet/modules/wget"]
+	path = vagrant/puppet/modules/wget
+	url = git://github.com/maestrodev/puppet-wget.git
+[submodule "vagrant/puppet/modules/apt"]
+	path = vagrant/puppet/modules/apt
+	url = https://github.com/puppetlabs/puppetlabs-apt.git
+[submodule "vagrant/puppet/modules/concat"]
+	path = vagrant/puppet/modules/concat
+	url = https://github.com/puppetlabs/puppetlabs-concat.git
+[submodule "vagrant/puppet/modules/rabbitmq"]
+	path = vagrant/puppet/modules/rabbitmq
+	url = https://github.com/puppetlabs/puppetlabs-rabbitmq.git
+[submodule "vagrant/puppet/modules/staging"]
+	path = vagrant/puppet/modules/staging
+	url = https://github.com/nanliu/puppet-staging.git
+[submodule "vagrant/puppet/modules/mongodb"]
+	path = vagrant/puppet/modules/mongodb
+	url = https://github.com/puppetlabs/puppetlabs-mongodb.git
+[submodule "vagrant/puppet/modules/redis"]
+	path = vagrant/puppet/modules/redis
+	url = https://github.com/thomasvandoren/puppet-redis.git
+[submodule "vagrant/puppet/modules/gcc"]
+	path = vagrant/puppet/modules/gcc
+	url = https://github.com/puppetlabs/puppetlabs-gcc.git
 [submodule "api"]
 	path = api
-	url = ssh://git@stash.dotstar.fr:7999/tlk/api.git
+	url = ssh://git@stash.dotstar.fr:7999/prcl/web-server.git
+[submodule "vagrant/puppet/modules/nginx"]
+	path = vagrant/puppet/modules/nginx
+	url = https://github.com/jfryman/puppet-nginx.git
 [submodule "client"]
 	path = client
-	url = ssh://git@stash.dotstar.fr:7999/tlk/client.git
-[submodule "tracker"]
-	path = tracker
-	url = ssh://git@stash.dotstar.fr:7999/tlk/tracker.git
+	url = ssh://git@stash.dotstar.fr:7999/prcl/web-client.git

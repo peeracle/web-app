@@ -16,6 +16,12 @@ nodes = [
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   nodes.each do |node|
     config.vm.define node[:hostname] do |node_config|
+
+      node_config.hostmanager.enabled = true
+      node_config.hostmanager.manage_host = true
+      node_config.hostmanager.ignore_private_ip = false
+      node_config.hostmanager.include_offline = true
+      
       node_config.vm.box = node[:box]
       node_config.vm.host_name = node[:hostname] + '.' + domain
 	  node_config.vm.network "private_network", ip: node[:ip], auto_correct: true
