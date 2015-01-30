@@ -3,12 +3,14 @@
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
+BOX_URL = "https://cloud-images.ubuntu.com/vagrant/utopic/20150128/utopic-server-cloudimg-amd64-vagrant-disk1.box"
+
 domain = 'peeracle.local'
 
 nodes = [
   { :hostname => 'api', :ip => '192.168.250.50', :box => 'hashicorp/precise32', :ram => 256, :shared => true },
   { :hostname => 'client', :ip => '192.168.250.51', :box => 'hashicorp/precise32', :ram => 256, :shared => true },
-  { :hostname => 'db', :ip => '192.168.250.52', :box => 'hashicorp/precise32', :ram => 256, :shared => false },
+  { :hostname => 'db', :ip => '192.168.250.52', :box => BOX_URL, :ram => 512, :shared => false },
   { :hostname => 'redis', :ip => '192.168.250.53', :box => 'hashicorp/precise32', :ram => 256, :shared => false },
   { :hostname => 'mq', :ip => '192.168.250.54', :box => 'hashicorp/precise32', :ram => 256, :shared => false },
 ]
