@@ -1,8 +1,19 @@
 node 'api' {
+  file { '/home/vagrant/api/logs':
+    ensure => directory,
+    owner => 'vagrant',
+    group => 'vagrant'
+  }
+  
   class { 'nodejs':
     version => 'v0.10.36',
   }
 
+  package { 'nodemon':
+    provider => 'npm',
+    require => Class['nodejs']
+  }
+  
   package { 'eslint':
     provider => 'npm',
     require => Class['nodejs']
@@ -11,24 +22,33 @@ node 'api' {
   class { 'nginx':
   }
   nginx::resource::vhost { 'api.peeracle.local':
-    proxy => 'http://localhost:8080'
+    proxy => 'http://localhost:8080',
+    access_log => '/home/vagrant/api/logs/nginx_access.log',
+    error_log => '/home/vagrant/api/logs/nginx_error.log',
   }
 }
 
 node 'client' {
+  file { '/home/vagrant/client/logs':
+    ensure => directory,
+    owner => 'vagrant',
+    group => 'vagrant'
+  }
+  
   class { 'nginx':
   }
+  
   nginx::resource::vhost { 'client.peeracle.local':
     ensure => present,
     www_root => '/home/vagrant/client/app',
-    access_log => '/home/vagrant/client/nginx_access.log',
-    error_log => '/home/vagrant/client/nginx_error.log',
+    access_log => '/home/vagrant/client/logs/nginx_access.log',
+    error_log => '/home/vagrant/client/logs/nginx_error.log',
   }
 }
 
 node 'db' {
-  exec {'mongodb-apt':
-    command => '/bin/bash /vagrant/vagrant/puppet/scripts/mongodb-apt.sh'
+  exec {'mongodb-apt-update':
+    command => '/bin/bash /vagrant/vagrant/puppet/scripts/mongodb-apt-update.sh'
   }
 
   exec {'mongodb-apt-install':
