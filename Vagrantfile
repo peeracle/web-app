@@ -31,19 +31,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       memory = node[:ram] ? node[:ram] : 256;
       node_config.vm.provider :virtualbox do |v|
-		v.customize [
-		  'modifyvm', :id,
-		  '--name', node[:hostname],
-		  '--memory', memory.to_s
-		]
-	  end
-	  
-	  if node[:shared] == true
-	    node_config.vm.synced_folder node[:hostname], '/home/vagrant/' + node[:hostname],
-		  owner: 'vagrant',
-		  group: 'vagrant'
+	v.customize [
+	  'modifyvm', :id,
+	  '--name', node[:hostname],
+	  '--memory', memory.to_s
+	]
       end
+      
+      if node[:shared] == true
+	node_config.vm.synced_folder node[:hostname], '/home/vagrant/' + node[:hostname],
+		                     owner: 'vagrant',
+		                     group: 'vagrant'
+      end
+
+      node_config.vm.provision :hostmanager
     end
+    
   end
   
   config.vm.provision "puppet" do |puppet|

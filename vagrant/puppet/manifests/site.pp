@@ -53,7 +53,7 @@ node 'db' {
 
   exec {'mongodb-apt-install':
     command => '/bin/bash /vagrant/vagrant/puppet/scripts/mongodb-apt-install.sh',
-    require => Exec['mongodb-apt']
+    require => Exec['mongodb-apt-update']
   }
 
   exec {'install-mongodb':
