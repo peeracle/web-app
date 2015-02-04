@@ -48,16 +48,21 @@ node 'client' {
 
 node 'db' {
   exec {'mongodb-apt-update':
-    command => '/bin/bash /vagrant/vagrant/puppet/scripts/mongodb-apt-update.sh'
+    command => '/bin/bash /vagrant/vagrant/puppet/scripts/mongodb-apt-update.sh',
+    timeout => 0,
+    logoutput => true
   }
 
   exec {'mongodb-apt-install':
     command => '/bin/bash /vagrant/vagrant/puppet/scripts/mongodb-apt-install.sh',
+    timeout => 0,
+    logoutput => true,
     require => Exec['mongodb-apt-update']
   }
 
   exec {'install-mongodb':
     command => '/bin/bash /vagrant/vagrant/puppet/scripts/install-mongodb.sh',
+    timeout => 0,
     require => Exec['mongodb-apt-install']
   }
   
