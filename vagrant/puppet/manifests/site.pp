@@ -19,8 +19,8 @@ node 'api' {
     require => Class['nodejs']
   }
   
-  class { 'nginx':
-  }
+  class { 'nginx': }
+  
   nginx::resource::vhost { 'api.peeracle.local':
     proxy => 'http://localhost:8080',
     access_log => '/home/vagrant/api/logs/nginx_access.log',
@@ -28,15 +28,14 @@ node 'api' {
   }
 }
 
-node 'client' {
+node 'client' {  
   file { '/home/vagrant/client/logs':
     ensure => directory,
     owner => 'vagrant',
     group => 'vagrant'
   }
   
-  class { 'nginx':
-  }
+  class { 'nginx': }
   
   nginx::resource::vhost { 'client.peeracle.local':
     ensure => present,
@@ -47,63 +46,77 @@ node 'client' {
 }
 
 node 'db' {
-  exec {'mongodb-apt-update':
-    command => '/bin/bash /vagrant/vagrant/puppet/scripts/mongodb-apt-update.sh',
-    timeout => 0,
-    logoutput => true
+  class { '::mysql::server':
+    root_password           => 'strongpassword',
+    remove_default_accounts => true,
+    service_enabled         => true,
+    
+    users                   => {
+      'api_dev@localhost'   => {
+        ensure              => 'present',
+	password_hash       => '*95DFC9EE8EAE5330D7892E32CC8B76648790916C'
+      },
+      'api_prod@localhost'   => {
+        ensure              => 'present',
+	password_hash       => '*4DCA60DCA667F5879D877080317C213FA42A40F8'
+      },
+      'api_test@localhost'   => {
+        ensure              => 'present',
+	password_hash       => '*DDAEFB47FB359FFDDB397D7D2F56EA6DBC4BC763'
+      }
+    },
+
+    databases => {
+      'api_dev' => {
+        ensure  => 'present',
+        charset => 'utf8',
+      },
+      'api_prod' => {
+        ensure  => 'present',
+        charset => 'utf8',
+      },
+      'api_test' => {
+        ensure  => 'present',
+        charset => 'utf8',
+      }
+    },
+
+    grants => {
+      'api_dev@localhost/api_dev.*' => {
+        ensure => 'present',
+	options => ['GRANT'],
+	privileges => ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+	table => 'api_dev.*',
+	user => 'api_dev@localhost'
+      },
+      'api_prod@localhost/api_prod.*' => {
+        ensure => 'present',
+	options => ['GRANT'],
+	privileges => ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+	table => 'api_prod.*',
+	user => 'api_prod@localhost'
+      },
+      'api_test@localhost/api_test.*' => {
+        ensure => 'present',
+	options => ['GRANT'],
+	privileges => ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+	table => 'api_test.*',
+	user => 'api_test@localhost'
+      }
+    }
   }
-
-  exec {'mongodb-apt-install':
-    command => '/bin/bash /vagrant/vagrant/puppet/scripts/mongodb-apt-install.sh',
-    timeout => 0,
-    logoutput => true,
-    require => Exec['mongodb-apt-update']
-  }
-
-  exec {'install-mongodb':
-    command => '/bin/bash /vagrant/vagrant/puppet/scripts/install-mongodb.sh',
-    timeout => 0,
-    require => Exec['mongodb-apt-install']
-  }
-  
-#  class {'::mongodb::server':
-#    auth => true,
-#    verbose => true,
-#    bind_ip => ['127.0.0.1', '192.168.250.52']
-#  }
-
-#  mongodb::db { 'api_dev':
-#    tries    => 10,
-#    user     => 'dev',
-#    password => 'LA4PnhPQR7O4vLT',
-#    require  => Class['mongodb::server'],
-#  }
-
-#  mongodb::db { 'api_prod':
-#    tries    => 10,
-#    user     => 'prod',
-#    password => 'i3r2t49Gn4s7wkt',
-#    require  => Class['mongodb::server'],
-#  }
-
-#  mongodb::db { 'api_test':
-#    tries    => 10,
-#    user     => 'test',
-#    password => 's3Do233O19775jt',
-#    require  => Class['mongodb::server'],
-#  }
 }
 
 node 'redis' {
   class { 'redis':
-    version => '2.8.19',
+    version => '2.8.19'
   }
 }
 
-node 'mq' {
+node 'mq' {  
   class { '::rabbitmq':
     service_manage    => false,
     port              => '5672',
-    delete_guest_user => true,
+    delete_guest_user => true
   }
 }

@@ -3,17 +3,16 @@
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
-BOX_HEAVY = "peeracle/utopic64"
-BOX_LIGHT = "hashicorp/precise64"
+BOX = "puphpet/debian75-x64"
 
 domain = 'peeracle.local'
 
 nodes = [
-  { :hostname => 'api', :ip => '192.168.250.50', :box => BOX_HEAVY, :ram => 512, :shared => true },
-  { :hostname => 'client', :ip => '192.168.250.51', :box => BOX_LIGHT, :ram => 128, :shared => true },
-  { :hostname => 'db', :ip => '192.168.250.52', :box => BOX_HEAVY, :ram => 512, :shared => false },
-  { :hostname => 'redis', :ip => '192.168.250.53', :box => BOX_LIGHT, :ram => 128, :shared => false },
-  { :hostname => 'mq', :ip => '192.168.250.54', :box => BOX_LIGHT, :ram => 128, :shared => false },
+  { :hostname => 'api', :ip => '192.168.250.50', :box => BOX, :ram => 128, :shared => true },
+  { :hostname => 'client', :ip => '192.168.250.51', :box => BOX, :ram => 128, :shared => true },
+  { :hostname => 'db', :ip => '192.168.250.52', :box => BOX, :ram => 128, :shared => false },
+  { :hostname => 'redis', :ip => '192.168.250.53', :box => BOX, :ram => 128, :shared => false },
+  { :hostname => 'mq', :ip => '192.168.250.54', :box => BOX, :ram => 128, :shared => false },
 ]
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|

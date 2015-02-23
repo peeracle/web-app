@@ -19,9 +19,6 @@
 [submodule "vagrant/puppet/modules/staging"]
 	path = vagrant/puppet/modules/staging
 	url = https://github.com/nanliu/puppet-staging.git
-[submodule "vagrant/puppet/modules/mongodb"]
-	path = vagrant/puppet/modules/mongodb
-	url = https://github.com/puppetlabs/puppetlabs-mongodb.git
 [submodule "vagrant/puppet/modules/redis"]
 	path = vagrant/puppet/modules/redis
 	url = https://github.com/thomasvandoren/puppet-redis.git
@@ -37,3 +34,9 @@
 [submodule "client"]
 	path = client
 	url = ssh://git@stash.dotstar.fr:7999/prcl/web-client.git
+[submodule "vagrant/puppet/modules/aptmirror"]
+	path = vagrant/puppet/modules/aptmirror
+	url = https://github.com/github/puppet-aptmirror.git
+[submodule "vagrant/puppet/modules/mysql"]
+	path = vagrant/puppet/modules/mysql
+	url = https://github.com/puppetlabs/puppetlabs-mysql.git
