@@ -8,11 +8,11 @@ BOX = "puphpet/debian75-x64"
 domain = 'peeracle.local'
 
 nodes = [
-  { :hostname => 'api', :ip => '192.168.250.50', :box => BOX, :ram => 128, :shared => true },
-  { :hostname => 'client', :ip => '192.168.250.51', :box => BOX, :ram => 128, :shared => true },
-  { :hostname => 'db', :ip => '192.168.250.52', :box => BOX, :ram => 128, :shared => false },
-  { :hostname => 'redis', :ip => '192.168.250.53', :box => BOX, :ram => 128, :shared => false },
-  { :hostname => 'mq', :ip => '192.168.250.54', :box => BOX, :ram => 128, :shared => false },
+  { :hostname => 'api', :ip => '192.168.250.50', :box => BOX, :ram => 256, :shared => true },
+  { :hostname => 'client', :ip => '192.168.250.51', :box => BOX, :ram => 256, :shared => true },
+  { :hostname => 'db', :ip => '192.168.250.52', :box => BOX, :ram => 256, :shared => false },
+  { :hostname => 'redis', :ip => '192.168.250.53', :box => BOX, :ram => 256, :shared => false },
+  { :hostname => 'mq', :ip => '192.168.250.54', :box => BOX, :ram => 256, :shared => false },
 ]
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
