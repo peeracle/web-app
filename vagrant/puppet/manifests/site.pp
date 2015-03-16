@@ -55,14 +55,17 @@ node 'db' {
       'api_dev@localhost'   => {
         ensure              => 'present',
 	password_hash       => '*95DFC9EE8EAE5330D7892E32CC8B76648790916C'
+        # password = LA4PnhPQR7O4vLT
       },
       'api_prod@localhost'   => {
-        ensure              => 'present',
-	password_hash       => '*4DCA60DCA667F5879D877080317C213FA42A40F8'
+        ensure               => 'present',
+        password_hash        => '*4DCA60DCA667F5879D877080317C213FA42A40F8'
+        # password = i3r2t49Gn4s7wkt
       },
       'api_test@localhost'   => {
-        ensure              => 'present',
-	password_hash       => '*DDAEFB47FB359FFDDB397D7D2F56EA6DBC4BC763'
+        ensure               => 'present',
+	password_hash        => '*DDAEFB47FB359FFDDB397D7D2F56EA6DBC4BC763'
+        # password = s3Do233O19775jt
       }
     },
 
