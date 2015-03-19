@@ -5,17 +5,17 @@ node 'api' {
     group => 'vagrant'
   }
   
-  class { 'nodejs':
-    version => 'v0.10.36',
-  }
+  class { 'nodejs': }
 
   package { 'nodemon':
     provider => 'npm',
+    ensure => present,
     require => Class['nodejs']
   }
   
   package { 'eslint':
     provider => 'npm',
+    ensure => present,
     require => Class['nodejs']
   }
   
@@ -42,6 +42,20 @@ node 'client' {
     www_root => '/home/vagrant/client/app',
     access_log => '/home/vagrant/client/logs/nginx_access.log',
     error_log => '/home/vagrant/client/logs/nginx_error.log',
+  }
+
+  class { 'nodejs': }
+
+  package { 'bower':
+    provider => 'npm',
+    ensure => present,
+    require => Class['nodejs']
+  }
+  
+  package { 'grunt-cli':
+    provider => 'npm',
+    ensure => present,
+    require => Class['nodejs']
   }
 }
 
