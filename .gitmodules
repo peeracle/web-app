@@ -37,3 +37,6 @@
 [submodule "vagrant/puppet/modules/mysql"]
 	path = vagrant/puppet/modules/mysql
 	url = https://github.com/puppetlabs/puppetlabs-mysql.git
+[submodule "vagrant/puppet/modules/nodejs"]
+	path = vagrant/puppet/modules/nodejs
+	url = https://github.com/puppetlabs/puppetlabs-nodejs.git
