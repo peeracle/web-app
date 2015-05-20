@@ -27,13 +27,13 @@
 	url = https://github.com/puppetlabs/puppetlabs-gcc.git
 [submodule "api"]
 	path = api
-	url = ssh://git@stash.dotstar.fr:7999/prcl/web-server.git
+	url = git@github.com:peeracle/web-server.git
 [submodule "vagrant/puppet/modules/nginx"]
 	path = vagrant/puppet/modules/nginx
 	url = https://github.com/jfryman/puppet-nginx.git
 [submodule "client"]
 	path = client
-	url = ssh://git@stash.dotstar.fr:7999/prcl/web-client.git
+	url = git@github.com:peeracle/web-client.git
 [submodule "vagrant/puppet/modules/aptmirror"]
 	path = vagrant/puppet/modules/aptmirror
 	url = https://github.com/github/puppet-aptmirror.git
