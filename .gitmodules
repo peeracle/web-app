@@ -30,7 +30,7 @@
 	url = https://github.com/jfryman/puppet-nginx.git
 [submodule "client"]
 	path = client
-	url = ssh://git@stash.dotstar.fr:7999/prcl/web-client.git
+	url = git@github.com:peeracle/web-client.git
 [submodule "vagrant/puppet/modules/aptmirror"]
 	path = vagrant/puppet/modules/aptmirror
 	url = https://github.com/github/puppet-aptmirror.git
