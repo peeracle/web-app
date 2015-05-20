@@ -60,23 +60,51 @@ node 'client' {
 }
 
 node 'db' {
+
+  class { 'postgresql::server':
+    ip_mask_deny_postgres_user => '0.0.0.0/32',
+    ip_mask_allow_all_users    => '0.0.0.0/0',
+    listen_addresses           => '*',
+    postgres_password          => 'TPSrep0rt?',
+  }
+
+  postgresql::server::db { 'api_dev':
+    user     => 'api_dev',
+    password => postgresql_password('api_dev', 'LA4PnhPQR7O4vLT'),
+  }
+
+  postgresql::server::role { 'marmot':
+    password_hash => postgresql_password('marmot', 'mypasswd'),
+  }
+
+  postgresql::server::database_grant { 'test1':
+    privilege => 'ALL',
+    db        => 'api_dev',
+    role      => 'marmot',
+  }
+
   class { '::mysql::server':
     root_password           => 'strongpassword',
     remove_default_accounts => true,
     service_enabled         => true,
+    override_options        => {
+	'mysqld' => {
+		'bind-address' => '192.168.250.52',
+        }
+    },
     
     users                   => {
-      'api_dev@localhost'   => {
+      'api_dev@api.peeracle.local'   => {
         ensure              => 'present',
 	password_hash       => '*95DFC9EE8EAE5330D7892E32CC8B76648790916C'
         # password = LA4PnhPQR7O4vLT
       },
-      'api_prod@localhost'   => {
+      'api_prod@api.peeracle.local'   => {
         ensure               => 'present',
         password_hash        => '*4DCA60DCA667F5879D877080317C213FA42A40F8'
         # password = i3r2t49Gn4s7wkt
       },
-      'api_test@localhost'   => {
+      'api_test@api.peeracle.local'   => {
         ensure               => 'present',
 	password_hash        => '*DDAEFB47FB359FFDDB397D7D2F56EA6DBC4BC763'
         # password = s3Do233O19775jt
@@ -99,26 +127,26 @@ node 'db' {
     },
 
     grants => {
-      'api_dev@localhost/api_dev.*' => {
+      'api_dev@api.peeracle.local/api_dev.*' => {
         ensure => 'present',
 	options => ['GRANT'],
-	privileges => ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+	privileges => ['ALTER', 'CREATE', 'DROP', 'SELECT', 'INSERT', 'UPDATE', 'DELETE'],
 	table => 'api_dev.*',
-	user => 'api_dev@localhost'
+	user => 'api_dev@api.peeracle.local'
       },
-      'api_prod@localhost/api_prod.*' => {
+      'api_prod@api.peeracle.local/api_prod.*' => {
         ensure => 'present',
 	options => ['GRANT'],
-	privileges => ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+	privileges => ['ALTER', 'CREATE', 'DROP', 'SELECT', 'INSERT', 'UPDATE', 'DELETE'],
 	table => 'api_prod.*',
-	user => 'api_prod@localhost'
+	user => 'api_prod@api.peeracle.local'
       },
-      'api_test@localhost/api_test.*' => {
+      'api_test@api.peeracle.local/api_test.*' => {
         ensure => 'present',
 	options => ['GRANT'],
-	privileges => ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+	privileges => ['ALTER', 'CREATE', 'DROP', 'SELECT', 'INSERT', 'UPDATE', 'DELETE'],
 	table => 'api_test.*',
-	user => 'api_test@localhost'
+	user => 'api_test@api.peeracle.local'
       }
     }
   }

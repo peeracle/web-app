@@ -40,3 +40,6 @@
 [submodule "vagrant/puppet/modules/nodejs"]
 	path = vagrant/puppet/modules/nodejs
 	url = https://github.com/puppetlabs/puppetlabs-nodejs.git
+[submodule "vagrant/puppet/modules/postgresql"]
+	path = vagrant/puppet/modules/postgresql
+	url = https://github.com/puppetlabs/puppetlabs-postgresql/
