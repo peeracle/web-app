@@ -1,3 +1,9 @@
+exec { "apt-update":
+  command => "/usr/bin/apt-get update"
+}
+
+Exec["apt-update"] -> Package <| |>
+
 node 'api' {
   file { '/home/vagrant/api/logs':
     ensure => directory,
@@ -86,25 +92,24 @@ node 'db' {
   class { '::mysql::server':
     root_password           => 'strongpassword',
     remove_default_accounts => true,
-    service_enabled         => true,
     override_options        => {
-	'mysqld' => {
-		'bind-address' => '192.168.250.52',
-        }
+      'mysqld' => {
+        'bind-address' => '0.0.0.0',
+      }
     },
-    
+    service_enabled         => true,
     users                   => {
-      'api_dev@api.peeracle.local'   => {
+      'api_dev@192.168.250.1'   => {
         ensure              => 'present',
 	password_hash       => '*95DFC9EE8EAE5330D7892E32CC8B76648790916C'
         # password = LA4PnhPQR7O4vLT
       },
-      'api_prod@api.peeracle.local'   => {
+      'api_prod@192.168.250.1'   => {
         ensure               => 'present',
         password_hash        => '*4DCA60DCA667F5879D877080317C213FA42A40F8'
         # password = i3r2t49Gn4s7wkt
       },
-      'api_test@api.peeracle.local'   => {
+      'api_test@192.168.250.1'   => {
         ensure               => 'present',
 	password_hash        => '*DDAEFB47FB359FFDDB397D7D2F56EA6DBC4BC763'
         # password = s3Do233O19775jt
@@ -127,26 +132,26 @@ node 'db' {
     },
 
     grants => {
-      'api_dev@api.peeracle.local/api_dev.*' => {
+      'api_dev@192.168.250.1/api_dev.*' => {
         ensure => 'present',
 	options => ['GRANT'],
 	privileges => ['ALTER', 'CREATE', 'DROP', 'SELECT', 'INSERT', 'UPDATE', 'DELETE'],
 	table => 'api_dev.*',
-	user => 'api_dev@api.peeracle.local'
+	user => 'api_dev@192.168.250.1'
       },
-      'api_prod@api.peeracle.local/api_prod.*' => {
+      'api_prod@192.168.250.1/api_prod.*' => {
         ensure => 'present',
 	options => ['GRANT'],
 	privileges => ['ALTER', 'CREATE', 'DROP', 'SELECT', 'INSERT', 'UPDATE', 'DELETE'],
 	table => 'api_prod.*',
-	user => 'api_prod@api.peeracle.local'
+	user => 'api_prod@192.168.250.1'
       },
-      'api_test@api.peeracle.local/api_test.*' => {
+      'api_test@192.168.250.1/api_test.*' => {
         ensure => 'present',
 	options => ['GRANT'],
 	privileges => ['ALTER', 'CREATE', 'DROP', 'SELECT', 'INSERT', 'UPDATE', 'DELETE'],
 	table => 'api_test.*',
-	user => 'api_test@api.peeracle.local'
+	user => 'api_test@192.168.250.1'
       }
     }
   }
